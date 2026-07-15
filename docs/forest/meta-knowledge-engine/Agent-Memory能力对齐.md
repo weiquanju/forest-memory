@@ -1,7 +1,7 @@
 ---
 forest: mke
-tree: 元知识引擎
-branch: Agent Memory 集成
+tree: 定位与边界
+branch: 能力对齐
 title: Agent Memory 能力对齐
 version: 1.0.0
 created: 2026-07-12

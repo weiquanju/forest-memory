@@ -1,6 +1,6 @@
 ---
 forest: mke
-tree: 元知识引擎
+tree: 架构设计
 branch: 知识抽取
 title: LLM 知识抽取器设计
 version: 1.0.0
