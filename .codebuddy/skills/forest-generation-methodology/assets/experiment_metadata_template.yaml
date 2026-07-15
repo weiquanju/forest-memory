@@ -1,0 +1,58 @@
+# 对照实验元数据模板
+#
+# 每次实验必须填写此文件，保存为 experiments/<exp-id>/.experiment_metadata.yaml
+# 模板来源: forest-generation-methodology Step 8
+
+# === 实验标识 ===
+experiment_id: "exp-001-dsv4flash-bim"    # 唯一标识: exp-{序号}-{模型}-{资料}
+
+# === 模型信息 ===
+model_name: "DeepSeek V4 Flash"           # 模型名称
+intelligence_index: 40                    # AAI 分数 (Artificial Analysis Intelligence Index)
+model_provider: "deepseek-api.com"        # API 提供商
+
+# === 实验环境 ===
+tool_name: "CodeBuddy"                    # AI 编程工具名称
+tool_version: "4.10.2"                    # 工具版本号
+ide_name: "VS Code"                      # IDE 名称
+ide_version: "1.106.1"                    # IDE 版本号
+os: "Windows_NT x64 10.0.26200"         # 操作系统及架构
+
+# === 输入信息 ===
+input_source: "人脑记忆机制的数据结构与算法分析.md"  # 输入资料描述
+input_version: "v1.0, 2026-07-12"         # 输入资料版本/日期
+input_hash: ""                            # 输入文件 SHA256（锁定版本）
+
+# === 输出信息 ===
+output_dir: "experiments/exp-001-dsv4flash-bim/forest"  # 输出森林目录
+
+# === 抽取参数 ===
+extraction_params:
+  threshold: 0.80                         # 交叉声明检测阈值
+  embedding_model: "paraphrase-multilingual-MiniLM-L12-v2"  # 嵌入模型
+  exclude_index: true                     # 是否排除 index.md
+  max_atoms_per_doc: 5                    # 单文档最大抽取原子数
+  temperature: 0.0                        # LLM 温度参数
+
+# === 时间信息 ===
+timestamp_start: "2026-07-16T10:00:00Z"   # 开始时间
+timestamp_end: "2026-07-16T14:30:00Z"     # 结束时间
+
+# === 评审信息（实验完成后填写）===
+reviewer_model: ""                        # 评审者模型（交叉评审，不能自评）
+review_score: null                        # 评审综合评分 (X.X/10)
+review_dimensions:
+  d1_citation_authenticity: null         # 引用真实性 (0-10)
+  d2_citation_accuracy: null             # 引用准确性 (0-10)
+  d3_hierarchical_organization: null     # 层级组织质量 (0-10)
+  d4_critical_analysis: null             # 批判性分析深度 (0-10)
+  d5_academic_norms: null                # 学术规范性 (0-10)
+correction_rate: null                    # 人工修正率 (%)
+
+# === 对照维度标记 ===
+comparison_dimension: "model"             # 对照维度: model / tool / source
+fixed_variables:                          # 固定变量（本维度不变的）
+  - "tool: CodeBuddy v4.10.2"
+  - "input: bim-source.md"
+  - "methodology: forest-generation-methodology v1.0.0"
+  - "review_method: forest-quality-reviewer v1.0.0"
