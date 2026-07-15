@@ -1,10 +1,10 @@
 ---
 forest: root
 title: 项目知识森林总索引
-version: 1.2.0
+version: 1.3.0
 created: 2026-07-12
-updated: 2026-07-14
-description: 元知识引擎（MKE）项目知识体系——以 MKE 为核心，bim / aic / frs 为支撑，按森林→树→枝干→叶层级组织。v1.2.0 完成了三森林知识向 MKE 的系统注入，覆盖度从 75-80% 提升至 90-95%
+updated: 2026-07-15
+description: 元知识引擎（MKE）项目知识体系——以 MKE 为核心，bim / aic / frs 为支撑，aeb 为评测参照，按森林→树→枝干→叶层级组织。v1.3.0 新增 AI 评测基准独立森林
 ---
 
 # 项目知识森林总索引
@@ -21,6 +21,7 @@ description: 元知识引擎（MKE）项目知识体系——以 MKE 为核心�
 | `bim` | 类脑记忆机制 | 生物学启发 | [index.md](brain-inspired-memory/index.md) | 四类记忆架构、容量管理四机制、Consolidation Pipeline、KV 检索原理、BTSP 写入优先级、永不删除原则、多智能体共享记忆 |
 | `aic` | AI 人机协作 | 消费场景 | [index.md](ai-collaboration/index.md) | 按 Worker 角色检索、注意力窗口分配、胶水提示输出格式、渐进式采纳路径、模型路由策略 |
 | `frs` | 前沿研究综述 | 学术对标 | [index.md](frontier-research-survey/index.md) | MemVerse 双区蒸馏、ConflictBank 三层冲突检测、CS-RAG 约束裁定、PRUNE 知识演化保护、RLVR 校准退化警示、MemoryArena 评估基准 |
+| `aeb` | AI评测基准 | 评测参照 | [index.md](ai-evaluation-benchmarks/index.md) | Artificial Analysis Intelligence Index v4.1 方法论、MMLU 57 学科基准、GPQA 防谷歌科学推理基准 |
 
 ## 引用规范
 
@@ -52,6 +53,13 @@ description: 元知识引擎（MKE）项目知识体系——以 MKE 为核心�
 │ • 永不删除原则    │          │ • 四类记忆架构       │          │                   │
 │                  │          │ • 三层冲突检测       │          │                   │
 └──────────────────┘          │ • MKE 自评估体系     │          └───────────────────┘
+                              └─────────┬───────────┘
+                                        │
+                              ┌─────────▼───────────┐
+                              │  AI评测基准 (aeb)    │
+                              │ • Artificial Analysis│
+                              │ • MMLU               │
+                              │ • GPQA               │
                               └─────────────────────┘
 ```
 
@@ -60,4 +68,5 @@ description: 元知识引擎（MKE）项目知识体系——以 MKE 为核心�
 - **bim → mke**（7 项注入）：CLS 双层巩固、KV 检索原理、BTSP 写入优先级、容量管理四机制、模块化四分类、SoHip 共享记忆、永不删除原则
 - **aic → mke**（5 项注入）：按 Worker 角色检索模式、注意力窗口分配、胶水提示输出格式、渐进式采纳路径对齐、模型路由策略
 - **frs → mke**（6 项注入）：MemVerse 双区蒸馏、ConflictBank 三层冲突检测、CS-RAG 约束规划裁定、PRUNE 级联保护、RLVR 校准退化警示、MemoryArena 评估基准
+- **aeb → mke**（评测参照）：Artificial Analysis 指数为 MKE 自评估提供行业对标；MMLU/GPQA 为 MKE 知识检索能力验证提供标准化评测方法
 - **mke → aic**：MKE 为 Agent 协作提供知识检索、记忆融合、存储引擎、治理校验等基础设施
