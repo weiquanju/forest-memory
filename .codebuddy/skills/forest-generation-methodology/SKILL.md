@@ -495,4 +495,5 @@ Model C              ✓          ✓          ✗ 跳过
 | 实验项目目录结构模板 | `assets/experiment_project_template.md` | 对照实验项目的目录结构、命名规则和社区贡献流程 |
 | 实验元数据模板 | `assets/experiment_metadata_template.yaml` | 实验环境声明和完整元数据的 YAML 模板 |
 | 对照实验执行 SOP | `assets/experiment_execution_sop.md` | 实验场景变体：启动协议（询问用户维度）+ 三维度分支 + 交叉评审调度 |
+| 实验环境初始化脚本 | `assets/setup_experiment.sh` | 基于 git worktree 创建物理隔离的实验环境，支持并行实验 |
 | 知识抽取执行器 | `knowledge-atom-extractor/` (独立 skill) | Step 2-3 的具体实现 |

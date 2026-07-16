@@ -1,54 +1,78 @@
 # 对照实验项目目录结构模板
 
-> 复制此结构创建独立的实验项目，与 forest-memory 主项目隔离。
+> 使用 `setup_experiment.sh` 脚本自动创建，基于 git worktree 实现物理隔离。
+
+## 快速创建
+
+```bash
+# 在实验项目根目录执行（脚本自动检查/初始化 git 仓库）
+bash .codebuddy/skills/forest-generation-methodology/assets/setup_experiment.sh \
+    <project_name> <subject1> [subject2] [subject3] ...
+
+# 示例
+bash setup_experiment.sh exp-model-20260716 dsv4flash dsv4pro glm52
+bash setup_experiment.sh exp-tool-20260716 codebuddy qwen-codex claude-code
+bash setup_experiment.sh exp-source-20260716 bim frs paper-2404-13501
+```
+
+## 目录结构（git worktree 方案）
 
 ```
-forest-memory-experiments/
+forest-memory-experiments/                # 独立 Git 仓库（脚本自动 init）
 │
-├── README.md                              # 实验项目说明
-├── .experiment_metadata_template.yaml      # 环境声明模板（复制使用）
+├── README.md                              # 实验项目说明（脚本生成）
+├── .experiment_metadata_template.yaml      # 环境声明模板
+├── .gitignore
 │
-├── input/                                 # 输入资料（锁定版本，不可修改）
-│   ├── bim/
-│   │   └── 人脑记忆机制的数据结构与算法分析.md   # bim 源文档
-│   ├── frs/
-│   │   └── AI与大模型...前沿研究综述.md         # frs 源文档
-│   └── paper-2404.13501/
-│       ├── paper.md                       # 论文全文（Markdown 格式）
-│       └── paper.pdf                      # 论文原始 PDF
+├── input/                                 # 共享输入资料（锁定版本，主分支管理）
+│   ├── bim_source/
+│   │   └── 人脑记忆机制的数据结构与算法分析.md
+│   ├── frs_source/
+│   │   └── AI与大模型...前沿研究综述.md
+│   └── papers/
+│       └── 2404.13501.pdf
 │
-├── experiments/                           # 实验输出（每次实验一个目录）
+├── subjects/                              # git worktree 根目录（物理隔离）
 │   │
-│   ├── exp-001-dsv4flash-bim/            # 命名规则: exp-{序号}-{模型}-{资料}
-│   │   ├── .experiment_metadata.yaml      # 实验元数据（必填）
-│   │   ├── forest/                        # 生成的知识森林
+│   ├── dsv4flash/                         # worktree (branch: experiment/dsv4flash)
+│   │   ├── input/                         # 输入资料副本（隔离）
+│   │   ├── forest/                        # 该 subject 的实验输出
 │   │   │   ├── index.md
 │   │   │   └── ...                        # 知识原子 .md 文件
-│   │   └── correction-log.md              # 修正日志（Step 7 产出）
+│   │   ├── .experiment_metadata.yaml      # 实验元数据
+│   │   └── .gitignore
 │   │
-│   ├── exp-002-dsv4pro-bim/
-│   ├── exp-003-glm52-bim/
-│   ├── exp-004-dsv4flash-frs/
-│   ├── exp-005-dsv4pro-frs/
-│   ├── exp-006-glm52-frs/
-│   ├── exp-007-dsv4flash-paper/
-│   ├── exp-008-dsv4pro-paper/
-│   ├── exp-009-glm52-paper/
+│   ├── dsv4pro/                           # worktree (branch: experiment/dsv4pro)
+│   │   ├── input/
+│   │   ├── forest/
+│   │   └── .experiment_metadata.yaml
+│   │
+│   └── glm52/                             # worktree (branch: experiment/glm52)
+│       ├── input/
+│       ├── forest/
+│       └── .experiment_metadata.yaml
+│
+├── reviews/                               # 评审报告（主分支管理，交叉评审）
+│   ├── review-dsv4flash-by-dsv4pro.md    # 命名规则: review-{被评审}-by-{评审者}
+│   ├── review-dsv4flash-by-glm52.md
+│   ├── review-dsv4pro-by-dsv4flash.md
+│   ├── review-dsv4pro-by-glm52.md
 │   └── ...
 │
-├── reviews/                               # 评审报告（交叉评审）
-│   ├── review-exp001-by-dsv4pro.md        # 命名规则: review-{实验ID}-by-{评审者}
-│   ├── review-exp001-by-glm52.md
-│   ├── review-exp002-by-dsv4flash.md
-│   ├── review-exp002-by-glm52.md
-│   └── ...
-│
-└── results/                               # 汇总结果
+└── results/                               # 汇总结果（主分支管理）
     ├── comparison-matrix-models.md        # 维度1: 不同模型对照矩阵
     ├── comparison-matrix-tools.md         # 维度2: 不同工具对照矩阵
     ├── comparison-matrix-sources.md       # 维度3: 不同资料对照矩阵
     └── capability-quality-mapping.md      # 能力-质量映射表更新
 ```
+
+## 隔离原理
+
+git worktree 为每个 subject 创建独立的工作目录（物理隔离）：
+- 每个 worktree 是独立的文件系统目录
+- 新会话 `cd subjects/{subject}/` 后只能看到自己的 `input/` 和 `forest/`
+- worktree 间互不可见，天然防止抄袭
+- 不同 worktree 可在不同终端并行执行
 
 ## 命名规则
 
@@ -95,15 +119,18 @@ Phase 1: 9 实验 × 2 评审者 = 18 份评审报告
 2. **无引用依赖**：实验输出不得引用 forest-memory 主项目的文件路径
 3. **输入锁定**：`input/` 目录一旦创建不可修改，确保不同实验使用完全相同的输入
 4. **工具锁定**：同一维度内的实验必须使用相同工具版本，记录在 `.experiment_metadata.yaml` 中
+5. **会话隔离（强制）**：每个实验（被测对象）必须在全新会话中执行，上下文干净清洁，不得继承之前会话的抽取结果、修正记录或评审数据
+6. **防抄袭机制（强制）**：使用 git worktree 实现物理隔离——每个 subject 在独立 worktree 中执行，worktree 间互不可见。新会话进入各自 worktree 目录，无法读取其他 subject 的 `forest/` 输出。由 `setup_experiment.sh` 脚本自动创建 worktree
 
 ## 社区贡献流程
 
 1. Fork 实验项目仓库
-2. 选择一个实验组合（模型 × 资料）
-3. 复制 `.experiment_metadata_template.yaml`，填写实验环境
+2. 运行 `setup_experiment.sh` 创建实验环境（自动初始化 git worktree）
+3. 选择一个 subject 的 worktree，在新会话中执行
 4. 执行 forest-generation-methodology 的 9 步 SOP
 5. 执行交叉评审（不能自评）
 6. 提交 PR，包含：
-   - `experiments/exp-XXX-XXX-XXX/` 完整实验目录
-   - `reviews/review-exp-XXX-by-XXX.md` 评审报告
+   - `subjects/{subject}/forest/` 完整实验输出
+   - `subjects/{subject}/.experiment_metadata.yaml` 实验元数据
+   - `reviews/review-{subject}-by-{reviewer}.md` 评审报告
    - 更新 `results/` 下的对照矩阵

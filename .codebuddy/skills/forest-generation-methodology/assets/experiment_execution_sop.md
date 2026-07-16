@@ -79,30 +79,45 @@ LLM 应使用如下结构构造 `ask_followup_question` 的 `questions` 参数�
 
 ## Step 1：实验环境隔离
 
-按 [`experiment_project_template.md`](experiment_project_template.md) 创建独立实验目录：
+使用 [`setup_experiment.sh`](setup_experiment.sh) 脚本基于 **git worktree** 创建物理隔离的实验环境：
+
+```bash
+# 在实验项目根目录执行（脚本会自动检查/初始化 git 仓库）
+bash .codebuddy/skills/forest-generation-methodology/assets/setup_experiment.sh \
+    exp-model-20260716 dsv4flash dsv4pro glm52
+```
+
+脚本自动完成：检查/初始化 git 仓库 → 创建目录结构 → 为每个 subject 创建独立 worktree → 复制 input/ 副本 → 生成元数据文件。
+
+**目录结构（git worktree 方案）**：
 
 ```
-{workspace}/experiments/{project_name}/
-├── .experiment_metadata.yaml    # 实验元数据（按 experiment_metadata_template.yaml）
-├── input/                       # 输入资料（锁定版本）
+{experiment_repo}/                          # 独立 Git 仓库（脚本自动 init）
+├── input/                                   # 共享输入资料（锁定版本，主分支管理）
 │   ├── bim_source/
 │   ├── frs_source/
-│   └── papers/                  # arXiv 论文 PDF
-├── forest/                     # 实验生成的森林（按被测对象分子目录）
-│   ├── {subject_1}/
-│   ├── {subject_2}/
-│   └── {subject_3}/
-├── reviews/                    # 评审报告（按 评审者_被评审对象 命名）
-│   ├── {reviewer}_{subject}.md
-└── REPORT.md                   # 实验总结报告
+│   └── papers/
+├── subjects/                                # git worktree 根目录
+│   ├── {subject_1}/                         # worktree (branch: experiment/{subject_1})
+│   │   ├── input/                           # 输入资料副本（隔离）
+│   │   ├── forest/                          # 该 subject 的实验输出
+│   │   └── .experiment_metadata.yaml        # 实验元数据
+│   ├── {subject_2}/                         # worktree (branch: experiment/{subject_2})
+│   └── {subject_3}/                         # worktree (branch: experiment/{subject_3})
+├── reviews/                                 # 评审报告（主分支管理）
+│   └── {reviewer}_{subject}.md
+├── .experiment_metadata_template.yaml
+└── README.md
 ```
 
 **隔离规则**（强制）：
-- 实验目录必须与项目主森林（`docs/forest/`）完全分离
+- 实验项目必须是独立 Git 仓库，与项目主森林（`docs/forest/`）完全分离
 - 实验森林不得引用主森林的任何叶子（避免交叉声明误报）
-- 输入资料必须锁定版本（复制到 `input/` 目录，不从主森林读取）
+- 输入资料必须锁定版本（脚本复制到各 worktree 的 `input/`，不从主森林读取）
+- **每个 subject 在独立 git worktree 中执行**——worktree 间物理隔离，互不可见，无需额外 ignore 配置
+- **支持并行实验**：不同 worktree 可在不同终端 + 不同会话中同时执行
 
-填写 `.experiment_metadata.yaml` 的环境声明部分（`environment` 字段）。
+填写各 worktree 的 `.experiment_metadata.yaml` 的环境声明部分（`environment` 字段）。
 
 ---
 
@@ -130,17 +145,50 @@ LLM 应使用如下结构构造 `ask_followup_question` 的 `questions` 参数�
 
 ## Step 3：抽取阶段
 
-对每个被测对象执行 `forest-generation-methodology` 的 **Step 2-3**（LLM 知识抽取）：
+对每个被测对象执行 `forest-generation-methodology` 的 **Step 2-3**（LLM 知识抽取）。
+
+### 会话隔离与防抄袭（强制）
+
+**核心原则**：每个 subject 必须在全新会话中独立抽取，且工作区中不得存在其他 subject 的实验产物。
+
+| 要求 | 说明 | 违反后果 |
+|------|------|---------|
+| 新会话 | 每个 subject 必须在全新会话中执行，上下文干净清洁 | 实验数据作废 |
+| 上下文清空 | 不得继承之前会话的抽取结果、修正记录、评审数据 | 实验数据作废 |
+| 工作区隔离 | 当前 subject 工作区中不得存在其他 subject 的 forest/ 输出 | 实验数据作废 |
+| 禁止抄袭 | 新会话+新模型不得直接复制/参考其他模型的实验产物 | 实验数据作废，标记为作弊 |
+
+**为什么需要物理隔离**：
+
+防抄袭不能依赖"禁止读取"的口头约束——模型可能读取工作区中存在的任何文件。若 exp-001 的 `forest/` 输出仍在工作区中，启动 exp-002 的新会话时，模型可能：
+- 读取 exp-001 的输出并"参考"其结构 → 抽取质量虚高
+- 直接复制 exp-001 的知识原子 → 完全抄袭
+- 受 exp-001 的组织方式影响 → 失去独立性
+
+最可靠的机制是**物理隔离**：当前 subject 工作时，工作区中不存在其他 subject 的产物。本项目通过 **git worktree** 实现物理隔离——每个 subject 在独立 worktree 中执行，worktree 间互不可见。
+
+### 执行流程
 
 ```
 for subject in subjects:
-    1. 切换到该被测对象的执行环境（维度1=切换模型，维度2=切换工具，维度3=切换资料）
-    2. 对每份输入资料执行抽取
-    3. 输出到 forest/{subject}/
-    4. 记录抽取元数据（token 消耗、耗时、人工修正次数）
+    1. 【开启新会话】确保上下文干净清洁（不得继承之前会话的任何上下文）
+    2. 【进入 worktree】cd subjects/{subject}/
+       - worktree 是独立物理目录，天然看不到其他 subject 的产物
+       - 确认 forest/ 目录为空（worktree 初始化时已创建）
+    3. 切换到该被测对象的执行环境
+       - 维度1：切换 LLM 模型
+       - 维度2：切换 AI 编程工具
+       - 维度3：切换输入资料
+    4. 对每份输入资料执行抽取（复用 9 步 SOP Step 2-3）
+    5. 输出到 forest/
+    6. 记录抽取元数据（token 消耗、耗时、人工修正次数）
+    7. 【提交产出】git add -A && git commit -m "experiment: {subject} extraction complete"
+
+并行模式（推荐）：为每个 subject 打开独立终端 + 独立会话，同时执行步骤 1-7。
 ```
 
-**抽取要求**（与正式生成一致）：
+### 抽取要求（与正式生成一致）
+
 - 必须输出带 YAML frontmatter 的知识原子文档
 - 必须执行交叉声明检测（每个 subject 内部）
 - 不得引用主森林（隔离原则）
