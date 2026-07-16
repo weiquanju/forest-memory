@@ -6,6 +6,7 @@ leaf: l3-memory-reading
 title: 代理记忆的读取与检索机制
 version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: DeepSeek V4 Flash
 source: "input/papers/2404.13501.md"
 refs:

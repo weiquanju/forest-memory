@@ -6,6 +6,7 @@ leaf: l2-memory-sources-forms
 title: 代理记忆的来源与存储形式
 version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: DeepSeek V4 Flash
 source: "input/papers/2404.13501.md; input/frs_source/AI与大模型在知识领域、Agent记忆、推理数据及推理关系中的前沿研究综述.md"
 refs:

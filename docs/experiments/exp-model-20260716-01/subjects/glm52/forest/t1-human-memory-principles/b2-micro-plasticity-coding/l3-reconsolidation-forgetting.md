@@ -4,7 +4,9 @@ tree: t1-human-memory-principles
 branch: b2-micro-plasticity-coding
 leaf: l3-reconsolidation-forgetting
 title: 再巩固与主动遗忘
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "bim_source/人脑记忆机制的数据结构与算法分析.md"

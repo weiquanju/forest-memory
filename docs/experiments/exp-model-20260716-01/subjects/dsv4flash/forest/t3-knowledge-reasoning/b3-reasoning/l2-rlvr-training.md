@@ -6,6 +6,7 @@ leaf: l2-rlvr-training
 title: RLVR训练范式—强化学习驱动的推理增强
 version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: DeepSeek V4 Flash
 source: "input/frs_source/AI与大模型在知识领域、Agent记忆、推理数据及推理关系中的前沿研究综述.md"
 refs:

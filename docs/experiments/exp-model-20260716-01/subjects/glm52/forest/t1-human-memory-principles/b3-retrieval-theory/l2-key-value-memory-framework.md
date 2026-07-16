@@ -4,7 +4,9 @@ tree: t1-human-memory-principles
 branch: b3-retrieval-theory
 leaf: l2-key-value-memory-framework
 title: 键值记忆框架
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "bim_source/人脑记忆机制的数据结构与算法分析.md"

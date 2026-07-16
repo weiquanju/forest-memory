@@ -4,7 +4,9 @@ tree: t2-agent-memory-systems
 branch: b2-forms-operations
 leaf: l1-textual-parametric-forms
 title: 文本记忆与参数化记忆
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "arXiv:2404.13501"

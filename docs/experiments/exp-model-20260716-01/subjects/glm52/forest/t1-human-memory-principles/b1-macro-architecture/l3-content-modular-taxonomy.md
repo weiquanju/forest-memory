@@ -4,7 +4,9 @@ tree: t1-human-memory-principles
 branch: b1-macro-architecture
 leaf: l3-content-modular-taxonomy
 title: 记忆的内容模块化分类存储
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "bim_source/人脑记忆机制的数据结构与算法分析.md"

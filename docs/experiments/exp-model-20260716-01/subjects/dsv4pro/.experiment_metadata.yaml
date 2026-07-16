@@ -24,6 +24,22 @@ timestamp_start: "2026-07-16T00:00:00Z"
 timestamp_end: "2026-07-16T01:30:00Z"
 duration_minutes: 90
 
+# === 自评质量门禁 (Step 3, 对照实验执行 SOP) ===
+quality_gate:
+  executed: true
+  executed_date: "2026-07-16"
+  executor: "DeepSeek V4 Pro (自评, 偏差声明: 技术检查非内容评分)"
+  gate_verdict: PASS
+  advisory_items:
+    - "21 leaf 文件统一缺少 version/updated frontmatter 字段（系统性，公平影响中性）"
+  checks:
+    empty_files:     { status: PASS, details: "0/25 empty files. 2 previously-empty files confirmed regenerated." }
+    yaml_completeness: { status: ADVISORY, details: "version/updated missing in 21 leaf files; index files complete." }
+    index_presence:  { status: PASS, details: "4/4 index files present (1 forest + 3 tree)." }
+    naming_convention: { status: PASS, details: "100% kebab-case, no spaces/special chars." }
+    refs_format:     { status: PASS, details: "All refs use [tree-branch] format, 10/10 targets valid." }
+  report_file: "quality-gate-self-assessment.md"
+
 # === 评审信息 ===
 reviews:
   - reviewer_model: "DeepSeek V4 Flash"

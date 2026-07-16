@@ -6,6 +6,7 @@ leaf: l2-associative-memory
 title: 联想记忆与内容寻址存储（CAM）
 version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: DeepSeek V4 Flash
 source: "input/bim_source/人脑记忆机制的数据结构与算法分析.md"
 refs:

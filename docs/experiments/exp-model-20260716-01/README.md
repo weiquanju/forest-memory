@@ -75,10 +75,12 @@ cd ../dsv4pro
 ```
 被测对象          评审者
                 dsv4flash   dsv4pro   glm52
-dsv4flash        ✗ 跳过      ✓         ✓
-dsv4pro          ✓           ✗ 跳过    ✓
-glm52            ✓           ✓         ✗ 跳过
+dsv4flash        ✗ 跳过      ✓ (R1+R2)  ✓ (v1+v2)
+dsv4pro          ✓ (v1+v2)   ✗ 跳过    ✓ (v2+v3)
+glm52            ✓ (R1+R2)   ✓ (R1+R2)  ✗ 跳过
 ```
+
+两轮评审：首轮（R1）9 份 + 自评质量门禁后重评轮（R2/v2/v3）6 份 = 共 **15 份评审报告**。详见 `REPORT.md`。
 
 ## 创建时间
 2026-07-16

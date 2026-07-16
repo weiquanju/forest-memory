@@ -4,7 +4,9 @@ tree: t1-human-memory-principles
 branch: b1-macro-architecture
 leaf: l2-hippocampal-neocortical-cls
 title: 海马体-新皮层互补学习系统
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "bim_source/人脑记忆机制的数据结构与算法分析.md"

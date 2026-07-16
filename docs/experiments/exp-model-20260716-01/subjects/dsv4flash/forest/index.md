@@ -4,10 +4,12 @@ title: 记忆系统与AI代理—从神经科学到计算模型
 version: 1.0.0
 created: 2026-07-16
 updated: 2026-07-16
+corrected: 2026-07-16 (自评质量门禁 R1)
 description: 覆盖人脑记忆机制的计算原理、AI代理记忆系统的设计与评估、知识增强与推理三大领域，整合神经科学、AI Agent和知识推理的交叉前沿
-source: "[bim_source] 人脑记忆机制的数据结构与算法分析.md | 人脑记忆的算法视角综述 | input/bim_source/"
-source: "[frs_source] AI与大模型在知识领域、Agent记忆、推理数据及推理关系中的前沿研究综述.md | 2025-2026 AI推理前沿综述 | input/frs_source/"
-source: "[arXiv:2404.13501] A Survey on the Memory Mechanism of LLM-based Agents | LLM Agent记忆综述 | input/papers/2404.13501.md"
+sources:
+  - "[bim_source] 人脑记忆机制的数据结构与算法分析.md | 人脑记忆的算法视角综述 | input/bim_source/"
+  - "[frs_source] AI与大模型在知识领域、Agent记忆、推理数据及推理关系中的前沿研究综述.md | 2025-2026 AI推理前沿综述 | input/frs_source/"
+  - "[arXiv:2404.13501] A Survey on the Memory Mechanism of LLM-based Agents | LLM Agent记忆综述 | input/papers/2404.13501.md"
 experiment: exp-model-20260716-01
 model: DeepSeek V4 Flash (AAI 40)
 ---

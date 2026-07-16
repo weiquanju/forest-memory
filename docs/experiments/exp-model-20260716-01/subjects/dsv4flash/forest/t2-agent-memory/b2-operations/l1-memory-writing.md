@@ -6,6 +6,7 @@ leaf: l1-memory-writing
 title: 代理记忆的写入与编码机制
 version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: DeepSeek V4 Flash
 source: "input/papers/2404.13501.md"
 refs:

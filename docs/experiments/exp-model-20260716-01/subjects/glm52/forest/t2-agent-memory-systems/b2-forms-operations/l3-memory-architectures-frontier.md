@@ -4,7 +4,9 @@ tree: t2-agent-memory-systems
 branch: b2-forms-operations
 leaf: l3-memory-architectures-frontier
 title: 前沿记忆架构
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "frs_source/AI与大模型在知识领域、Agent记忆、推理数据及推理关系中的前沿研究综述.md"

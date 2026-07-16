@@ -6,6 +6,7 @@ leaf: l3-multimodal-integration
 title: 多模态记忆的跨感官整合
 version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: DeepSeek V4 Flash
 source: "input/bim_source/人脑记忆机制的数据结构与算法分析.md"
 refs:

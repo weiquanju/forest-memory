@@ -4,7 +4,9 @@ tree: t3-knowledge-augmentation-reasoning
 branch: b1-graphrag-reasoning
 leaf: l2-practical-graphrag-cs-rag
 title: 实用级GraphRAG与鲁棒检索
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "frs_source/AI与大模型在知识领域、Agent记忆、推理数据及推理关系中的前沿研究综述.md"

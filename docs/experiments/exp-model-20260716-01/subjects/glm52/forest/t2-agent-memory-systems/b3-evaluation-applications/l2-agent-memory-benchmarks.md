@@ -4,7 +4,9 @@ tree: t2-agent-memory-systems
 branch: b3-evaluation-applications
 leaf: l2-agent-memory-benchmarks
 title: Agent记忆基准演进
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "frs_source/AI与大模型在知识领域、Agent记忆、推理数据及推理关系中的前沿研究综述.md"

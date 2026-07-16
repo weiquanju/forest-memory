@@ -4,7 +4,9 @@ tree: t2-agent-memory-systems
 branch: b3-evaluation-applications
 leaf: l1-direct-indirect-evaluation
 title: 直接与间接评估方法
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "arXiv:2404.13501"

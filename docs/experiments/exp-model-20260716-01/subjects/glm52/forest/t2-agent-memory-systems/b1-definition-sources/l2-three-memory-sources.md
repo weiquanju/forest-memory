@@ -4,7 +4,9 @@ tree: t2-agent-memory-systems
 branch: b1-definition-sources
 leaf: l2-three-memory-sources
 title: 三类记忆来源
+version: 1.0.0
 created: 2026-07-16
+updated: 2026-07-16
 model: GLM-5.2
 source:
   - "arXiv:2404.13501"
