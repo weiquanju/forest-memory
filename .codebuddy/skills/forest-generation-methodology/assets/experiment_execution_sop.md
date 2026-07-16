@@ -261,6 +261,11 @@ fix: 2 empty files detected and regenerated
 
 > **关键原则**：自评门禁只检查已有跨树引用的格式是否正确，不检查是否应该有跨树引用。后者是内容质量问题，属于交叉评审 D3/D5 的评分范围。
 
+
+**能力边界（exp-model-20260716-01 实验实证）**：
+
+> 3 个森林均执行自评质量门禁后重评，实证确认：自评门禁的作用域**严格限于 D5 的 frontmatter 完整性**，D1-D4 内容维度完全不变（dsv4flash D5 5→6、glm52 D5 8→8.5、dsv4pro 推迟修复无变化）。内容级短板（如 dsv4flash 的 D4=3、PoG 方法名错误 "Path-of-Graph"→应为 "Paths-over-Graph"）技术门禁无法捕获，须由交叉评审覆盖。详见 `SKILL.md` Step 7 补充说明。
+
 ---
 
 ## Step 3b：合并 worktree 结果
