@@ -314,6 +314,8 @@ bash .codebuddy/skills/forest-generation-methodology/assets/merge_experiment.sh
 
 按交叉评审矩阵调度评审者。**评审者不能评审自己的输出**。
 
+> 当评审者间出现评分分歧时，按 forest-quality-reviewer 的 `assets/arbitration_protocol.md` 执行仲裁。CodeBuddy CN 推荐仲裁者：MiniMax-M3 (AAI 44)。
+
 ### 矩阵构造
 
 对于 N 个被测对象（互为评审者），构造 N×(N-1) 组评审：

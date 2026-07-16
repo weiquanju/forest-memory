@@ -391,6 +391,16 @@ Coding (16%, Terminal-Bench + SciCode)
 
 ---
 
+### 分歧仲裁
+
+当评审者间出现评分分歧时，按 [`assets/arbitration_protocol.md`](assets/arbitration_protocol.md) 执行仲裁。
+
+- 硬触发：任何维度差 ≥2 分 → 必须仲裁
+- 软触发：主观维度（D4/D5）差 =1 分 + 评审者 AAI 差 ≥7 → 建议仲裁
+- CodeBuddy CN 推荐仲裁者：MiniMax-M3 (AAI 44, $0.22) — 不同家族，中立角色
+
+---
+
 ## 评审报告输出规范
 
 ### 评分项纪律（exp-model-20260716-01 仲裁实证）
