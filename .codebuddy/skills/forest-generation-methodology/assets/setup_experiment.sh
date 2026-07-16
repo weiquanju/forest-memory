@@ -224,7 +224,7 @@ done
 log_step "Step 5: 生成实验元数据"
 
 # 复制元数据模板到项目根目录
-METADATA_TEMPLATE="$PROJECT_DIR/.experiment_metadata_template.yaml"
+METADATA_TEMPLATE=".experiment_metadata_template.yaml"
 if [ -f "$METADATA_TEMPLATE_SOURCE" ]; then
     cp "$METADATA_TEMPLATE_SOURCE" "$METADATA_TEMPLATE"
     log_info "元数据模板已从 skill assets 复制"
