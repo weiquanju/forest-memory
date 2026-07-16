@@ -1,0 +1,63 @@
+# === 实验标识 ===
+experiment_id: "exp-materials-20260716-01-paper"
+project_name: "exp-materials-20260716-01"
+subject: "paper"
+
+# === 模型信息 ===
+model_name: "DeepSeek V4 Pro"
+intelligence_index: 44
+model_provider: "deepseek-api.com"
+
+# === 实验环境 ===
+tool_name: "CodeBuddy"
+tool_version: "4.10.2"
+ide_name: "VS Code"
+ide_version: "1.106.1"
+os: "Windows_NT x64 10.0.26200"
+
+# === 输入信息 ===
+input_source: "A Survey on the Memory Mechanism of Large Language Model based Agents (arXiv:2404.13501)"
+input_version: "arXiv:2404.13501, 2024-04"
+input_hash: ""
+
+# === 输出信息 ===
+output_dir: "subjects/paper/forest"
+
+# === 抽取参数 ===
+extraction_params:
+  threshold: 0.80
+  embedding_model: "paraphrase-multilingual-MiniLM-L12-v2"
+  exclude_index: true
+  max_atoms_per_doc: 5
+  temperature: 0.0
+
+# === 时间信息 ===
+timestamp_start: "2026-07-16T00:00:00Z"
+timestamp_end: "2026-07-16T00:00:00Z"
+created: "2026-07-16"
+
+# === 评审信息（双评审均值）===
+reviewers:
+  - model: "DeepSeek V4 Pro (AAI 44)"
+    score: 8.6
+    dimensions: { d1: 10, d2: 9, d3: 9, d4: 6, d5: 9 }
+  - model: "MiniMax-M3 (AAI 44)"
+    score: 8.8
+    dimensions: { d1: 10, d2: 9, d3: 9, d4: 7, d5: 9 }
+review_score: 8.7
+review_dimensions:
+  d1_citation_authenticity: 10.0
+  d2_citation_accuracy: 9.0
+  d3_hierarchical_organization: 9.0
+  d4_critical_analysis: 6.5
+  d5_academic_norms: 9.0
+correction_rate: null
+inter_rater_deviation: 0.2
+
+# === 对照维度标记 ===
+comparison_dimension: "source"
+fixed_variables:
+  - "model: DeepSeek V4 Pro (AAI 44)"
+  - "tool: CodeBuddy"
+  - "methodology: forest-generation-methodology v1.0.0"
+  - "review_method: forest-quality-reviewer v1.0.0"

@@ -1,0 +1,58 @@
+# 对照实验元数据模板（维度3：不同资料对照）
+# 项目: exp-materials-20260716-01
+
+experiment:
+  project_name: "exp-materials-20260716-01"
+  dimension: "source"           # 维度3：不同资料对照
+  created: "2026-07-16"
+  status: in_progress
+
+environment:
+  tool_name: "CodeBuddy"
+  tool_version: "4.10.2"
+  ide_name: "VS Code"
+  ide_version: "1.106.1"
+  os: "Windows_NT x64 10.0.26200"
+
+fixed_variables:
+  model: "DeepSeek V4 Pro (AAI 44)"
+  model_provider: "deepseek-api.com"
+  tool: "CodeBuddy"
+  methodology: "forest-generation-methodology v1.0.0"
+  review_method: "forest-quality-reviewer v1.0.0"
+
+subjects:
+  - id: "bim"
+    input: "bim_source/人脑记忆机制的数据结构与算法分析.md"
+    input_type: "领域综述"
+    output_dir: "subjects/bim/forest"
+    status: not_started
+
+  - id: "frs"
+    input: "frs_source/AI与大模型在知识领域、Agent记忆、推理数据及推理关系中的前沿研究综述.md"
+    input_type: "前沿研究综述"
+    output_dir: "subjects/frs/forest"
+    status: not_started
+
+  - id: "paper"
+    input: "papers/2404.13501 (A Survey on the Memory Mechanism of LLM based Agents)"
+    input_type: "单篇学术论文"
+    output_dir: "subjects/paper/forest"
+    status: not_started
+
+extraction_params:
+  threshold: 0.80
+  embedding_model: "paraphrase-multilingual-MiniLM-L12-v2"
+  exclude_index: true
+  temperature: 0.0
+  max_atoms_per_doc: 5
+
+results: []
+
+cross_review_matrix:
+  bim:
+    reviewers: ["frs", "paper"]
+  frs:
+    reviewers: ["bim", "paper"]
+  paper:
+    reviewers: ["bim", "frs"]
