@@ -1,0 +1,37 @@
+experiment:
+  project_name: "exp-tool-20260716"
+  subject: "CodeBuddy"
+  dimension: "tool"
+  created: "2026-07-16T09:57:00Z"
+  status: extraction_complete
+  forests:
+    - bim (类脑记忆机制森林)
+    - frs (AI与大模型前沿研究森林)
+    - llm-agent-memory (LLM Agent记忆机制)
+
+environment:
+  tool_name: "CodeBuddy"
+  tool_version: ""
+  ide_name: "CodeBuddy (VS Code)"
+  ide_version: ""
+  os: "Windows_NT x64 10.0.26200"
+  node_version: ""
+
+extraction:
+  tokens_consumed: 0
+  duration_minutes: 0
+  human_correction_rate: 0.0
+  forest_structure:
+    forests: 3
+    trees: 11
+    leaves: 64
+    total_documents: 71
+    empty_files_fixed: 2
+      - forest/frs/index.md (regenerated)
+      - forest/llm-agent-memory/index.md (regenerated)
+
+fixed_variables:
+  model: "DSV4-Flash"
+  material: "bim_source + frs_source + arXiv:2404.13501"
+
+review_results: []

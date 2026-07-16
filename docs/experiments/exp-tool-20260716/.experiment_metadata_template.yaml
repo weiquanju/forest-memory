@@ -1,0 +1,24 @@
+experiment:
+  project_name: "exp-tool-20260716"
+  dimension: "tool"          # model / tool / material
+  created: ""
+  status: in_progress
+
+environment:
+  tool_name: ""
+  tool_version: ""
+  ide_name: ""
+  ide_version: ""
+  os: ""
+  node_version: ""
+
+fixed_variables:
+  model: "DSV4-Flash"
+  tool: ""
+  material: "bim_source + frs_source + arXiv:2404.13501"
+
+subjects:
+  - opencode
+  - CodeBuddy
+
+results: []

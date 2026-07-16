@@ -1,0 +1,31 @@
+experiment:
+  project_name: "exp-tool-20260716"
+  subject: "opencode"
+  dimension: "tool"
+  created: "2026-07-16T09:57:00Z"
+  status: extraction_complete
+  forest: mi
+
+environment:
+  tool_name: "opencode"
+  tool_version: "0.1.0 (deepseek-v4-flash-free)"
+  ide_name: "CLI"
+  ide_version: ""
+  os: "Windows_NT x64 10.0.26200"
+  node_version: ""
+
+extraction:
+  tokens_consumed: 0
+  duration_minutes: 30
+  human_correction_rate: 0.0
+  forest_structure:
+    trees: 6
+    branches: 22
+    leaves: 22
+    total_documents: 31
+
+fixed_variables:
+  model: "DSV4-Flash"
+  material: "bim_source + frs_source + arXiv:2404.13501"
+
+review_results: []
