@@ -1,0 +1,70 @@
+# === 实验标识 ===
+experiment_id: "exp-model-20260716-01-glm52"
+
+# === 模型信息 ===
+model_name: "GLM-5.2"
+intelligence_index: 51
+model_provider: "zhipu-api.com"
+
+# === 实验环境 ===
+tool_name: "CodeBuddy"
+tool_version: "4.10.2"
+ide_name: "VS Code"
+ide_version: "1.106.1"
+os: "Windows_NT x64 10.0.26200"
+
+# === 输入信息 ===
+input_source: "bim_source / frs_source / arXiv:2404.13501"
+input_version: "v1.0, 2026-07-12"
+input_hash: ""
+
+# === 输出信息 ===
+output_dir: "subjects/glm52/forest"
+
+# === 抽取参数 ===
+extraction_params:
+  threshold: 0.80
+  embedding_model: "paraphrase-multilingual-MiniLM-L12-v2"
+  exclude_index: true
+  max_atoms_per_doc: 5
+  temperature: 0.0
+
+# === 时间信息 ===
+timestamp_start: "2026-07-16T10:00:00Z"
+timestamp_end: "2026-07-16T11:45:00Z"
+
+# === 对照维度标记 ===
+comparison_dimension: "model"
+fixed_variables:
+  - "tool: CodeBuddy v4.10.2"
+  - "input: bim_source / frs_source / arXiv:2404.13501"
+  - "methodology: forest-generation-methodology v1.0.0"
+  - "review_method: forest-quality-reviewer v1.0.0"
+
+# === 评审信息 ===
+reviews:
+  - reviewer_model: "DeepSeek V4 Flash"
+    reviewer_aai: 40
+    review_date: "2026-07-16"
+    overall_score: 8.2
+    dimensions:
+      d1_citation_authenticity: 9
+      d2_citation_accuracy: 8
+      d3_hierarchical_organization: 9
+      d4_critical_analysis: 7
+      d5_academic_norms: 8
+    correction_rate_estimate: "< 8%"
+  - reviewer_model: "DeepSeek V4 Pro"
+    reviewer_aai: 44
+    review_date: "2026-07-16"
+    overall_score: 8.2
+    dimensions:
+      d1_citation_authenticity: 9
+      d2_citation_accuracy: 8
+      d3_hierarchical_organization: 9
+      d4_critical_analysis: 7
+      d5_academic_norms: 8
+    correction_rate_estimate: "< 8%"
+    review_file: "../../reviews/review-glm52-by-dsv4pro.md"
+tokens_consumed: 0
+duration_minutes: 105

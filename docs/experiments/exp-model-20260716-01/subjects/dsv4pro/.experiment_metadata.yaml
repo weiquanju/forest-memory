@@ -1,0 +1,76 @@
+experiment_id: exp-model-20260716-01-dsv4pro
+model_name: DeepSeek V4 Pro
+intelligence_index: 44
+model_provider: deepseek-api.com
+tool_name: CodeBuddy
+tool_version: "4.10.2"
+ide_name: "VS Code"
+ide_version: "1.106.1"
+extraction_params:
+  threshold: 0.80
+  embedding_model: "paraphrase-multilingual-MiniLM-L12-v2"
+  temperature: 0.0
+os: Windows_NT x64
+input_source: >
+  bim_source (人脑记忆机制的数据结构与算法分析, 197行) +
+  frs_source (AI与大模型综述 v4.0, 725行) +
+  arXiv:2404.13501 (LLM Agent Memory Survey, 2121行)
+output_dir: subjects/dsv4pro/forest/
+forest_id: memory-systems-ai
+total_trees: 3
+total_branches: 10
+total_leaves: 21
+timestamp_start: "2026-07-16T00:00:00Z"
+timestamp_end: "2026-07-16T01:30:00Z"
+duration_minutes: 90
+
+# === 评审信息 ===
+reviews:
+  - reviewer_model: "DeepSeek V4 Flash"
+    reviewer_aai: 40
+    review_date: "2026-07-16"
+    overall_score: 6.8
+    dimensions:
+      d1_citation_authenticity: 8
+      d2_citation_accuracy: 7
+      d3_hierarchical_organization: 8
+      d4_critical_analysis: 5
+      d5_academic_norms: 6
+    correction_rate_estimate: "~12%"
+    note: "修复前评分（含2个空文件）"
+  - reviewer_model: "GLM-5.2"
+    reviewer_aai: 51
+    review_date: "2026-07-16"
+    overall_score: 7.0
+    dimensions:
+      d1_citation_authenticity: 9
+      d2_citation_accuracy: 7
+      d3_hierarchical_organization: 8
+      d4_critical_analysis: 5
+      d5_academic_norms: 6
+    correction_rate_estimate: "~15%"
+    note: "修复前评分（含2个空文件）"
+  - reviewer_model: "DeepSeek V4 Pro (自评, 偏差风险高)"
+    reviewer_aai: 44
+    review_date: "2026-07-16"
+    overall_score: 7.8
+    dimensions:
+      d1_citation_authenticity: 9
+      d2_citation_accuracy: 8
+      d3_hierarchical_organization: 9
+      d4_critical_analysis: 6
+      d5_academic_norms: 7
+    correction_rate_estimate: "~8%"
+    note: "修复2个空文件后重评"
+  - reviewer_model: "DeepSeek V4 Flash (v2 重评)"
+    reviewer_aai: 40
+    review_date: "2026-07-16"
+    overall_score: 7.8
+    dimensions:
+      d1_citation_authenticity: 9
+      d2_citation_accuracy: 8
+      d3_hierarchical_organization: 9
+      d4_critical_analysis: 6
+      d5_academic_norms: 7
+    correction_rate_estimate: "< 10%"
+    note: "修复后交叉重评，各维度+1分"
