@@ -1,0 +1,30 @@
+# 对照实验元数据模板
+# 实验项目: exp-model-20260716-01
+# 创建时间: 2026-07-16
+
+experiment:
+  project_name: "exp-model-20260716-01"
+  dimension: "model"  # model / tool / material
+  created: "2026-07-16"
+  status: in_progress
+
+environment:
+  tool_name: "CodeBuddy"
+  tool_version: "4.10.2"
+  ide_name: "VS Code"
+  ide_version: "1.106.1"
+  os: "Windows_NT x64 10.0.26200"
+
+fixed_variables:
+  tool: "CodeBuddy v4.10.2"
+  model: "（维度1，模型为自变量）"
+  material: "bim_source / frs_source / arXiv:2404.13501"
+  methodology: "forest-generation-methodology v1.0.0"
+  review_method: "forest-quality-reviewer v1.0.0"
+
+subjects:
+  - dsv4flash  # DeepSeek V4 Flash (AAI 40)
+  - dsv4pro    # DeepSeek V4 Pro (AAI 44)
+  - glm52      # GLM-5.2 (AAI 51)
+
+results: []
