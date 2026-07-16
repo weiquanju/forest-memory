@@ -175,6 +175,9 @@ for citation in all_citations(forest):
 | 命名规范一致性 | 15% | 检查命名是否符合 `forest/tree/branch` 的层级约定 |
 | refs 引用网络连通性 | 10% | 检查是否有孤立节点（无入边也无出边的 Leaf）|
 
+> **D5 命名规范口径**（exp-materials-20260716-01 实验实证）：
+> "命名规范一致性"检查的是**内部一致性**——同一森林内命名风格是否统一（如全部 kebab-case vs 全部 snake_case，`forest/tree/branch` 层级约定是否一致），**不检查语言偏好**（中文 vs 英文）。只要同一森林内命名风格统一，不因中文/英文文件名差异扣分。
+
 **交叉声明检测方法**（量化 Leaf 单一职责执行）：
 
 ```python
