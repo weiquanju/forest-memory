@@ -1,0 +1,21 @@
+# 实验元数据
+experiment_id: fgm-20260716-cb-dsv4flash-exp-tool
+model_name: DeepSeek V4 Flash
+intelligence_index: 40
+model_provider: deepseek
+tool_name: CodeBuddy
+tool_version: 4.x
+ide_name: VS Code
+os: Windows_NT x64
+input_source: 3份资料——bim_source(人脑记忆机制)/frs_source(AI推理综述v4.0)/papers(arXiv:2404.13501 LLM Agent Memory Survey)
+input_version: 2026-07-16
+output_dir: subjects/CodeBuddy/forest/
+extraction_params: threshold=0.80(默认), 无需交叉声明检测(无已有知识库), 直接LLM抽取
+timestamp_start: 2026-07-16T09:57:00Z
+timestamp_end: "{{ now ISO 8601 }}"
+forests_created:
+  - bim: 23 atoms, 4 trees, 8 branches
+  - frs: 22 atoms, 6 trees, 12 branches
+  - llm-agent-memory: 12 atoms, 5 trees, 6 branches
+total_atoms: 57
+review_status: pending (待交叉评审)
