@@ -195,6 +195,48 @@ for subject in subjects:
 
 ---
 
+## Step 3b：合并 worktree 结果
+
+各 subject 的抽取在独立 worktree 中完成后，需要将结果合并到主分支，便于后续评审和汇总。
+
+### 执行方式
+
+```bash
+bash .codebuddy/skills/forest-generation-methodology/assets/merge_experiment.sh
+```
+
+合并脚本自动完成：
+1. 切换到主分支
+2. 发现所有 `experiment/*` 分支
+3. 更新 `.gitignore`（允许追踪元数据文件）
+4. 将各 worktree 的 `forest/`、`input/`、`.experiment_metadata.yaml` 添加到主分支
+5. 提交合并
+6. 生成 `results/comparison-matrix-models.md` 和 `REPORT.md` 模板
+
+### 合并后的目录结构
+
+```
+{experiment_repo}/
+├── input/                           # 共享输入资料
+├── subjects/
+│   ├── {subject_1}/
+│   │   ├── forest/                  # 已合并的实验产出
+│   │   ├── input/                   # 输入资料副本
+│   │   └── .experiment_metadata.yaml
+│   ├── {subject_2}/
+│   └── {subject_3}/
+├── reviews/                         # 评审报告（待填写）
+├── results/                         # 对照矩阵和汇总结果
+│   └── comparison-matrix-models.md
+├── REPORT.md                        # 实验总结报告
+├── .experiment_metadata_template.yaml
+└── README.md
+```
+
+> 合并完成后，各 subject 的 `forest/` 内容在主分支可见，评审者可直接读取。
+
+---
+
 ## Step 4：评审阶段（交叉评审矩阵）
 
 按交叉评审矩阵调度评审者。**评审者不能评审自己的输出**。

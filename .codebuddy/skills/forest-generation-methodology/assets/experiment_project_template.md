@@ -74,6 +74,21 @@ git worktree 为每个 subject 创建独立的工作目录（物理隔离）：
 - worktree 间互不可见，天然防止抄袭
 - 不同 worktree 可在不同终端并行执行
 
+## 合并流程
+
+实验完成后，各 worktree 的结果需要合并到主分支：
+
+```bash
+bash .codebuddy/skills/forest-generation-methodology/assets/merge_experiment.sh
+```
+
+合并脚本自动完成：
+- 将各 worktree 分支的 `forest/`、`input/`、`.experiment_metadata.yaml` 合并到主分支
+- 生成 `results/comparison-matrix-models.md` 和 `REPORT.md` 模板
+- 提交合并结果到 main 分支
+
+合并后各 subject 的 `forest/` 内容在主分支可见，评审者可直接读取。
+
 ## 命名规则
 
 ### 实验 ID

@@ -131,7 +131,7 @@ mkdir -p "$PROJECT_DIR"
 cd "$PROJECT_DIR"
 
 # 创建共享目录
-mkdir -p input reviews subjects
+mkdir -p input reviews subjects results
 
 # 自动从 assets/input/ 复制实验资料（无需用户手动操作）
 log_info "从 skill assets/input/ 复制实验资料..."
@@ -157,6 +157,7 @@ GITIGNORE
 log_info "项目目录已创建: $PROJECT_DIR/"
 log_info "  ├── input/          (共享输入资料，从 assets/input/ 自动复制)"
 log_info "  ├── reviews/        (评审报告)"
+log_info "  ├── results/        (对照矩阵和汇总结果)"
 log_info "  ├── subjects/       (worktree 根目录)"
 log_info "  └── .gitignore"
 
@@ -318,6 +319,7 @@ $PROJECT_NAME/
 │   │   └── .experiment_metadata.yaml
 │   └── ...
 ├── reviews/                # 评审报告（交叉评审）
+├── results/               # 对照矩阵和汇总结果
 ├── .experiment_metadata_template.yaml
 └── README.md
 \`\`\`
