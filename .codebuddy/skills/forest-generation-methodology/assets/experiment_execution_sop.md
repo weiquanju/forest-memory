@@ -350,46 +350,63 @@ subject_N        ✓           ✓           ...   ✗ 跳过
 
 ---
 
-## Step 5：数据归集
+## Step 5：数据归集（脚本自动化）
 
-### 5.1 填写评审结果
+> **推荐方式**：使用 `collect_experiment_data.py` 脚本自动提取评审数据。
+> 脚本从 `reviews/` 目录提取评分，自动计算双评审均值和评审者间一致性，生成对照矩阵。
+> 如脚本无法提取（评审报告格式不兼容），可由非实验参与者模型（MiniMax-M3）手动归集。
 
-将所有评审数据填入 `.experiment_metadata.yaml` 的 `results` 字段：
+### 5.1 运行数据归集脚本
 
-```yaml
-results:
-  - experiment_id: exp-001
-    subject: {subject_1}
-    reviewer: {subject_2}
-    d1_citation_authenticity: 9/10
-    d2_citation_accuracy: 7/10
-    d3_hierarchy: 8/10
-    d4_critical_analysis: 4/10
-    d5_academic_norm: 5/10
-    overall: 6.5/10
-    human_correction_rate: 0.14
-    tokens_consumed: 125000
-    duration_minutes: 45
-  - experiment_id: exp-002
-    # ...
+```bash
+python .codebuddy/skills/forest-generation-methodology/assets/collect_experiment_data.py \
+    {experiment_dir}
 ```
 
-### 5.2 生成对照数据表格
+脚本自动完成：
+1. 扫描 `reviews/` 目录的所有评审报告
+2. 从 frontmatter 提取评审者/被评审者信息
+3. 从正文提取 D1-D5 评分（兼容多种格式）
+4. 计算每个被评审者的双评审均值
+5. 计算评审者间一致性（inter-rater agreement）
+6. 生成 `results/comparison-matrix-models.md` 对照矩阵
 
-按实验维度生成对照表格（参见 `SKILL.md` 中的表格模板）：
-- 维度1：模型对照表
-- 维度2：工具对照表
-- 维度3：资料对照表
+### 5.2 人工验证
 
-### 5.3 计算统计量
+脚本生成对照矩阵后，人工验证关键数据点：
+- 评分是否与评审报告一致
+- 均值计算是否正确
+- 一致性统计是否准确
 
-- 各维度的均值与标准差
-- 被测对象间的差异显著性（样本量足够时）
-- 评审者间的一致性（inter-rater agreement）
+### 5.3 更新元数据
+
+将验证后的数据填入 `.experiment_metadata.yaml` 的 `results` 字段。
+
+> **执行者**：数据归集为结构化数据处理，不涉及内容判断。脚本自动化优先，无需高能力模型。
 
 ---
 
-## Step 6：实验报告输出
+## Step 6：实验报告输出（非实验参与者执行）
+
+> **执行者要求**：报告输出由**非实验参与者的中立模型**执行，推荐 MiniMax-M3 (AAI 44, $0.22)。
+> 理由：报告需要中立的数据分析和批判性写作，实验参与者（被评审者）可能存在自利偏差。
+
+### 执行者选择
+
+| 候选 | AAI | 中立性 | 推荐度 | 理由 |
+|------|:---:|:---:|:---:|------|
+| **MiniMax-M3** | 44 | ✅ 非参与者 | ✅ **推荐** | 中立 + 足够能力 + $0.22 |
+| GLM-5.2 | 51 | ❌ 被评审者 | ⚠️ 需声明偏差 | 能力最强但自利偏差风险 |
+| DSV4 Pro | 44 | ❌ 被评审者 | ❌ 不推荐 | 同族偏差 |
+
+### 偏差声明（如使用实验参与者）
+
+如因条件限制使用实验参与者撰写报告，必须在报告中声明：
+1. 报告撰写者与被评审者的关系
+2. 自利偏差风险评估（低/中/高）
+3. 关键结论由人工复核
+
+### 报告内容
 
 生成 `REPORT.md`，包含：
 
@@ -418,8 +435,8 @@ results:
 | Step 2 资料准备 | Step 1 输入策展 | 实验版固定资料版本 |
 | Step 3 抽取阶段 | Step 2-3 LLM 抽取 + Step 6-7 索引生成+迭代修正 | 复用 + 增加自评质量门禁（技术检查，不含内容评分） |
 | Step 4 评审阶段 | Step 4-7 评审+修正 | 实验版改为交叉评审 |
-| Step 5 数据归集 | Step 8 元数据 | 实验版扩展元数据 |
-| Step 6 报告输出 | Step 9 索引生成 | 实验版改为报告生成 |
+| Step 5 数据归集 | Step 8 元数据 | 实验版改为脚本自动化（collect_experiment_data.py） |
+| Step 6 报告输出 | Step 9 索引生成 | 实验版改为非实验参与者执行（MiniMax-M3） |
 
 **不重复的内容**：9 步 SOP 中的"主题设计规则""交叉声明检测算法""引用真实性审计流程"等在实验中完全适用，本文档不重复定义。
 

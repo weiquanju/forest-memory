@@ -528,4 +528,5 @@ Model C              ✓          ✓          ✗ 跳过
 | 对照实验执行 SOP | `assets/experiment_execution_sop.md` | 实验场景变体：启动协议（询问用户维度）+ 三维度分支 + 交叉评审调度 |
 | 实验环境初始化脚本 | `assets/setup_experiment.sh` | 基于 git worktree 创建物理隔离的实验环境，支持并行实验 |
 | 实验结果合并脚本 | `assets/merge_experiment.sh` | 合并各 worktree 分支结果到主分支，生成对照矩阵和报告模板 |
+| 实验数据归集脚本 | `assets/collect_experiment_data.py` | 从评审报告自动提取评分，计算均值和一致性，生成对照矩阵 |
 | 知识抽取执行器 | `knowledge-atom-extractor/` (独立 skill) | Step 2-3 的具体实现 |
