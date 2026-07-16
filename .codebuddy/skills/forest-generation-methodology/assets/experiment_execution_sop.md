@@ -189,7 +189,7 @@ for subject in subjects:
           - YAML frontmatter 完整性（title/version/created/updated/refs）
           - index.md 存在性（森林级 + 树级）
           - 文件命名规范（无特殊字符、无空格）
-          - 跨树引用格式检查
+          - 跨树引用格式检查（仅检查已有引用的格式，不检查是否应该有跨树引用）
        c. 发现技术错误 → 修复 → 记录修正日志（见下方"自评质量门禁"说明）
        d. 无技术错误 → 通过门禁
     8. 【提交产出】git add -A && git commit -m "experiment: {subject} extraction complete"
@@ -249,7 +249,17 @@ fix: 2 empty files detected and regenerated
 | YAML 缺失 | frontmatter 缺少必填字段 | 补充缺失字段 |
 | index.md 缺失 | 森林级或树级 index.md 不存在 | 按 forest_index_template 生成 |
 | 命名不规范 | 文件名含空格或特殊字符 | 重命名（kebab-case） |
-| 跨树引用格式 | refs 格式不统一 | 统一为 `[forest] 文档名 \| 引用原因` |
+| 跨树引用格式 | 三级判定（见下方说明） | 修复格式错误的跨树引用 |
+
+**跨树引用格式三级判定**：
+
+| 情况 | 判定 | 处理 |
+|------|------|------|
+| 有跨树引用，格式正确（`[forest_id] 文档名 \| 原因`） | ✅ 通过 | — |
+| 有跨树引用，格式错误（缺少 `[forest_id]` 前缀） | ❌ 技术错误 | 自评门禁修复格式 |
+| 无跨树引用（refs 仅用于文献引用） | ➖ 不适用 | 记录数量，供交叉评审参考 |
+
+> **关键原则**：自评门禁只检查已有跨树引用的格式是否正确，不检查是否应该有跨树引用。后者是内容质量问题，属于交叉评审 D3/D5 的评分范围。
 
 ---
 
