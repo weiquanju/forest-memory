@@ -2,25 +2,31 @@
 """
 实验数据归集脚本 (Step 5)
 
-从 reviews/ 目录的评审报告中自动提取评分数据，
-生成对照矩阵和统计量，更新 .experiment_metadata.yaml。
+从用户指定的评审报告文件中自动提取评分数据，
+生成对照矩阵和统计量。
 
 用法:
-    python collect_experiment_data.py <experiment_dir>
+    python collect_experiment_data.py <review_files...> [--output PATH]
 
-输出:
-    - results/comparison-matrix-models.md  (对照矩阵)
-    - 控制台统计摘要
+示例:
+    # 维度1（模型对照）— shell 自动展开通配符
+    python collect_experiment_data.py reviews/review-*.md --output results/matrix.md
+
+    # 维度2（工具对照）
+    python collect_experiment_data.py reviews/*.md --output results/matrix-tools.md
+
+    # 明确指定文件
+    python collect_experiment_data.py review-a-by-b.md review-a-by-c.md
 
 前置条件:
-    - reviews/ 目录中已有评审报告（含 frontmatter + 评分表格）
-    - 评审报告 frontmatter 须包含: reviewer_model, reviewee_model, reviewer_aai, reviewee_aai
+    - 评审报告含 frontmatter（reviewee_model 或 reviewee_tool 或 reviewee_material）
+    - 评审报告正文含 D1-D5 评分数据
 """
 import os
 import sys
 import re
+import argparse
 import yaml
-import json
 from pathlib import Path
 from collections import defaultdict
 
@@ -82,46 +88,55 @@ def parse_review_report(filepath):
 
     return {
         "file": Path(filepath).name,
-        "reviewer": frontmatter.get("reviewer_model", "unknown"),
+        "frontmatter": frontmatter,
+        "reviewer": frontmatter.get("reviewer_model") or frontmatter.get("reviewer_tool", "unknown"),
         "reviewer_aai": frontmatter.get("reviewer_aai", "?"),
-        "reviewee": frontmatter.get("reviewee_model", "unknown"),
+        "reviewee": frontmatter.get("reviewee_model") or frontmatter.get("reviewee_tool") or frontmatter.get("reviewee_material", "unknown"),
         "reviewee_aai": frontmatter.get("reviewee_aai", "?"),
         "bias_risk": frontmatter.get("bias_risk", "?"),
         "scores": scores,
     }
 
 
-def collect_reviews(reviews_dir):
-    """收集所有评审报告。"""
+def collect_reviews(file_list):
+    """从用户指定的文件列表中收集评审报告。"""
     reviews = []
-    review_path = Path(reviews_dir)
-
-    if not review_path.exists():
-        print(f"错误: reviews/ 目录不存在: {reviews_dir}")
-        return reviews
-
-    for md_file in sorted(review_path.glob("review-*.md")):
-        result = parse_review_report(md_file)
+    for filepath in file_list:
+        if not os.path.exists(filepath):
+            print(f"  ✗ {filepath}: 文件不存在")
+            continue
+        result = parse_review_report(filepath)
         if result and result["scores"]:
             reviews.append(result)
             print(f"  ✓ {result['file']}: {result['reviewer']} -> {result['reviewee']} "
                   f"(D1={result['scores'].get('D1', '?')}, 综合={result['scores'].get('overall', '?')})")
         else:
-            print(f"  ✗ {md_file.name}: 无法提取评分")
-
+            print(f"  ✗ {filepath}: 无法提取评分")
     return reviews
 
 
-def compute_stats(reviews):
-    """计算每个被评审者的双评审均值和评审者间一致性。"""
-    # 按被评审者分组
-    by_reviewee = defaultdict(list)
+def detect_group_key(reviews):
+    """自动检测分组键：reviewee_tool > reviewee_material > reviewee_model。"""
     for r in reviews:
-        by_reviewee[r["reviewee"]].append(r)
+        fm = r.get("frontmatter", {})
+        if fm.get("reviewee_tool"):
+            return "reviewee_tool", "工具"
+        if fm.get("reviewee_material"):
+            return "reviewee_material", "资料"
+    return "reviewee_model", "模型"
 
-    # 计算每个被评审者的均值
-    reviewee_stats = {}
-    for reviewee, revs in by_reviewee.items():
+
+def compute_stats(reviews, group_key):
+    """按分组键计算均值和评审者间一致性。"""
+    # 按分组键分组
+    by_group = defaultdict(list)
+    for r in reviews:
+        group_value = r["frontmatter"].get(group_key, r.get("reviewee", "unknown"))
+        by_group[group_value].append(r)
+
+    # 计算每组的均值
+    group_stats = {}
+    for group_value, revs in by_group.items():
         dims = ["D1", "D2", "D3", "D4", "D5", "overall"]
         means = {}
         for dim in dims:
@@ -139,33 +154,33 @@ def compute_stats(reviews):
                 if all(v == values[0] for v in values):
                     agreement += 1
 
-        reviewee_stats[reviewee] = {
+        group_stats[group_value] = {
             "reviewers": [r["reviewer"] for r in revs],
             "means": means,
             "agreement": f"{agreement}/{total}" if total > 0 else "N/A",
             "agreement_rate": f"{agreement/total*100:.1f}%" if total > 0 else "N/A",
         }
 
-    return reviewee_stats
+    return group_stats
 
 
-def generate_matrix(stats, output_path):
+def generate_matrix(stats, output_path, dimension_label):
     """生成对照矩阵 markdown。"""
     lines = [
-        "# 对照矩阵：不同模型（脚本自动生成）",
+        f"# 对照矩阵：不同{dimension_label}（脚本自动生成）",
         "",
         "> 由 collect_experiment_data.py 自动生成，请人工验证后使用。",
         "",
-        "## 五维度评分（双评审均值）",
+        f"## 五维度评分（双评审均值）",
         "",
-        "| 维度 | " + " | ".join(stats.keys()) + " |",
+        f"| 维度 | " + " | ".join(stats.keys()) + " |",
         "|------|" + "|".join(["---" for _ in stats]) + "|",
     ]
 
     for dim in ["D1", "D2", "D3", "D4", "D5", "overall"]:
         row = f"| {dim} |"
-        for reviewee in stats:
-            val = stats[reviewee]["means"].get(dim, "?")
+        for group_value in stats:
+            val = stats[group_value]["means"].get(dim, "?")
             row += f" {val} |"
         lines.append(row)
 
@@ -173,18 +188,18 @@ def generate_matrix(stats, output_path):
         "",
         "## 评审者间一致性",
         "",
-        "| 被评审模型 | 评审者 | 一致率 |",
+        f"| 被评审{dimension_label} | 评审者 | 一致率 |",
         "|-----------|--------|:---:|",
     ])
 
-    for reviewee, s in stats.items():
-        lines.append(f"| {reviewee} | {', '.join(s['reviewers'])} | {s['agreement_rate']} |")
+    for group_value, s in stats.items():
+        lines.append(f"| {group_value} | {', '.join(s['reviewers'])} | {s['agreement_rate']} |")
 
     lines.extend([
         "",
         "## 评审报告清单",
         "",
-        "| 被评审模型 | 评审者 | D1 | D2 | D3 | D4 | D5 | 综合 |",
+        f"| 被评审{dimension_label} | 评审者 | D1 | D2 | D3 | D4 | D5 | 综合 |",
         "|-----------|--------|:---:|:---:|:---:|:---:|:---:|:---:|",
     ])
 
@@ -195,49 +210,50 @@ def generate_matrix(stats, output_path):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("用法: python collect_experiment_data.py <experiment_dir>")
-        print("示例: python collect_experiment_data.py exp-model-20260716-01/")
-        sys.exit(1)
-
-    exp_dir = Path(sys.argv[1])
-    reviews_dir = exp_dir / "reviews"
-    results_dir = exp_dir / "results"
+    parser = argparse.ArgumentParser(description="实验数据归集 (Step 5)")
+    parser.add_argument("review_files", nargs="+", help="评审报告文件路径（可用 shell 通配符）")
+    parser.add_argument("--output", default="results/comparison-matrix.md",
+                        help="对照矩阵输出路径（默认 results/comparison-matrix.md）")
+    args = parser.parse_args()
 
     print("=" * 60)
     print("实验数据归集 (Step 5)")
     print("=" * 60)
-    print(f"\n实验目录: {exp_dir}")
-    print(f"评审目录: {reviews_dir}\n")
+    print(f"\n输入文件: {len(args.review_files)} 个")
+    print(f"输出路径: {args.output}\n")
 
     # 收集评审
     print("提取评审数据:")
-    reviews = collect_reviews(reviews_dir)
+    reviews = collect_reviews(args.review_files)
 
     if not reviews:
         print("\n错误: 未找到有效评审报告")
         sys.exit(1)
 
+    # 自动检测分组维度
+    group_key, dimension_label = detect_group_key(reviews)
+    print(f"\n分组维度: {dimension_label}（分组键: {group_key}）")
+
     # 计算统计量
     print(f"\n计算统计量:")
-    stats = compute_stats(reviews)
+    stats = compute_stats(reviews, group_key)
 
-    for reviewee, s in stats.items():
-        print(f"  {reviewee}: 综合={s['means'].get('overall', '?')}, "
+    for group_value, s in stats.items():
+        print(f"  {group_value}: 综合={s['means'].get('overall', '?')}, "
               f"一致性={s['agreement_rate']}")
 
     # 生成对照矩阵
-    results_dir.mkdir(exist_ok=True)
-    matrix_path = results_dir / "comparison-matrix-models.md"
-    generate_matrix(stats, matrix_path)
+    output_dir = Path(args.output).parent
+    output_dir.mkdir(parents=True, exist_ok=True)
+    generate_matrix(stats, args.output, dimension_label)
 
     # 汇总
     print(f"\n{'=' * 60}")
     print("归集完成")
     print(f"{'=' * 60}")
     print(f"  评审报告数: {len(reviews)}")
-    print(f"  被评审模型数: {len(stats)}")
-    print(f"  对照矩阵: {matrix_path}")
+    print(f"  {dimension_label}数: {len(stats)}")
+    print(f"  对照矩阵: {args.output}")
     print(f"\n下一步:")
     print(f"  1. 人工验证对照矩阵数据")
     print(f"  2. 由非实验参与者（MiniMax-M3）撰写 REPORT.md")

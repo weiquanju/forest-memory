@@ -353,14 +353,15 @@ subject_N        ✓           ✓           ...   ✗ 跳过
 ## Step 5：数据归集（脚本自动化）
 
 > **推荐方式**：使用 `collect_experiment_data.py` 脚本自动提取评审数据。
-> 脚本从 `reviews/` 目录提取评分，自动计算双评审均值和评审者间一致性，生成对照矩阵。
-> 如脚本无法提取（评审报告格式不兼容），可由非实验参与者模型（MiniMax-M3）手动归集。
+> 用户指定评审报告文件作为参数（shell 通配符自动展开），脚本自动提取评分、计算均值和评审者间一致性，生成对照矩阵。
+> 分组维度自适应（检测 frontmatter 中的 reviewee_tool/reviewee_material/reviewee_model）。
 
 ### 5.1 运行数据归集脚本
 
 ```bash
 python .codebuddy/skills/forest-generation-methodology/assets/collect_experiment_data.py \
-    {experiment_dir}
+    {experiment_dir}/reviews/*.md \
+    --output {experiment_dir}/results/comparison-matrix.md
 ```
 
 脚本自动完成：
