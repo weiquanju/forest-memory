@@ -76,6 +76,31 @@
       "text": "在百万文档场景下，MKE 延迟保持稳定（见内部 benchmark 2026Q1）。",
       "expected_constraint_keys": ["scenario", "metric"],
       "_why": "'在百万文档场景下'->scenario; '（见内部 benchmark 2026Q1）'->metric"
+    },
+    {
+      "text": "王五反对 MKE 优于传统 RAG。",
+      "expected_constraint_keys": ["baseline", "attributed_to"],
+      "_why": "'优于 RAG'->baseline（v3.1 新增比较级触发词）; '王五反对'->attributed_to"
+    },
+    {
+      "text": "钱七摒弃向量数据库的所有变体方案。",
+      "expected_constraint_keys": ["attributed_to"],
+      "_why": "'钱七摒弃'->attributed_to（v3.1 否定类动词必须标归属）"
+    },
+    {
+      "text": "孙八推翻 A18 优于 A17 的结论。",
+      "expected_constraint_keys": ["baseline", "attributed_to"],
+      "_why": "'优于 A17'->baseline; '孙八推翻'->attributed_to"
+    },
+    {
+      "text": "李四否认'MKE 比 RAG 慢'的断言。",
+      "expected_constraint_keys": ["baseline", "attributed_to"],
+      "_why": "'比 RAG'->baseline; '李四否认'->attributed_to"
+    },
+    {
+      "text": "某研究员怀疑 MKE 比 RAG 慢；另一位研究员赞同。",
+      "expected_constraint_keys": ["baseline", "confidence", "attributed_to"],
+      "_why": "'比 RAG'->baseline; '怀疑'->confidence; '某研究员'/'另一位研究员'->attributed_to（多观点归属）"
     }
   ]
 }
