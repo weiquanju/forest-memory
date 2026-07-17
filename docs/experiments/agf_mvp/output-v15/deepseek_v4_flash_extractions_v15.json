@@ -1,0 +1,201 @@
+{
+  "model": "DeepSeek V4 Flash (AAI~40)",
+  "samples": [
+    {
+      "text": "A18 在单核跑分场景下较 A17 提升 30%（Geekbench6）。",
+      "preds": [
+        {
+          "s": "A18",
+          "p": "提升",
+          "o": "30%",
+          "constraints": {
+            "scenario": "单核跑分",
+            "baseline": "A17",
+            "metric": "Geekbench6"
+          }
+        }
+      ]
+    },
+    {
+      "text": "本季度 MKE 检索延迟预算为 <500ms，该指标适用于 v0.9 之前。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "检索延迟预算",
+          "o": "<500ms",
+          "constraints": {
+            "valid_until": "本季度；v0.9"
+          }
+        }
+      ]
+    },
+    {
+      "text": "KG 专家认为 MKE 的 provenance 机制并非独有。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "provenance 机制",
+          "o": "并非独有",
+          "constraints": {
+            "attributed_to": "KG专家"
+          }
+        }
+      ]
+    },
+    {
+      "text": "A18 芯片由 TSMC 代工。",
+      "preds": [
+        {
+          "s": "A18 芯片",
+          "p": "代工",
+          "o": "TSMC",
+          "constraints": {}
+        }
+      ]
+    },
+    {
+      "text": "MKE 相比传统 RAG 在检索质量上可能更好，但缺乏实证。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "更好",
+          "o": "传统 RAG",
+          "constraints": {
+            "baseline": "传统 RAG",
+            "confidence": "可能；缺乏实证"
+          }
+        }
+      ]
+    },
+    {
+      "text": "新芯片较前代提速 20%。",
+      "preds": [
+        {
+          "s": "新芯片",
+          "p": "提速",
+          "o": "20%",
+          "constraints": {
+            "baseline": "前代"
+          }
+        }
+      ]
+    },
+    {
+      "text": "相比 2024 版，今年模型的吞吐量提升 40%。",
+      "preds": [
+        {
+          "s": "今年模型",
+          "p": "吞吐量提升",
+          "o": "40%",
+          "constraints": {
+            "baseline": "2024版"
+          }
+        }
+      ]
+    },
+    {
+      "text": "王五否认 MKE 的核心创新是 provenance。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "核心创新",
+          "o": "provenance",
+          "constraints": {
+            "attributed_to": "王五"
+          }
+        }
+      ]
+    },
+    {
+      "text": "李四认为 RAG 已被向量数据库取代。",
+      "preds": [
+        {
+          "s": "RAG",
+          "p": "被取代",
+          "o": "向量数据库",
+          "constraints": {
+            "attributed_to": "李四"
+          }
+        }
+      ]
+    },
+    {
+      "text": "A 专家认为 MKE 检索质量优于 RAG；B 专家则持相反看法。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "检索质量优于",
+          "o": "RAG",
+          "constraints": {
+            "attributed_to": "A专家"
+          }
+        }
+      ]
+    },
+    {
+      "text": "有人认为 MKE 比 RAG 慢；另有人持相反意见。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "比…慢",
+          "o": "RAG",
+          "constraints": {
+            "attributed_to": "有人"
+          }
+        }
+      ]
+    },
+    {
+      "text": "该 SLA 在 2027 年 6 月之前有效。",
+      "preds": [
+        {
+          "s": "该 SLA",
+          "p": "有效",
+          "o": "2027 年 6 月之前",
+          "constraints": {
+            "valid_until": "2027年6月"
+          }
+        }
+      ]
+    },
+    {
+      "text": "MKE v1.0 之后将启用新检索 API，v0.9 之前仍用旧版。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "用",
+          "o": "旧版",
+          "constraints": {
+            "valid_until": "v0.9"
+          }
+        }
+      ]
+    },
+    {
+      "text": "MKE 可能比 RAG 更好（尚无实证），但有专家持怀疑态度。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "更好",
+          "o": "RAG",
+          "constraints": {
+            "confidence": "可能；尚无实证"
+          }
+        }
+      ]
+    },
+    {
+      "text": "在百万文档场景下，MKE 延迟保持稳定（见内部 benchmark 2026Q1）。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "延迟",
+          "o": "稳定",
+          "constraints": {
+            "scenario": "百万文档场景"
+          }
+        }
+      ]
+    }
+  ]
+}

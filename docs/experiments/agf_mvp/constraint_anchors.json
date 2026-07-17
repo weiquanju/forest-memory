@@ -1,0 +1,81 @@
+{
+  "_note": "客观约束锚点。评估侧私有文件，禁止喂给被测模型（否则泄漏答案）。",
+  "_criterion": "expected_constraint_keys 仅标注文本中依据 extraction_spec.md §3 触发词客观出现的约束维度，不代表某模型的抽取结果，也不定义 (s,p,o) 三元组真值。",
+  "anchors": [
+    {
+      "text": "A18 在单核跑分场景下较 A17 提升 30%（Geekbench6）。",
+      "expected_constraint_keys": ["scenario", "baseline", "metric"],
+      "_why": "'在…场景下'->scenario; '较 A17'->baseline; '（Geekbench6）'->metric"
+    },
+    {
+      "text": "本季度 MKE 检索延迟预算为 <500ms，该指标适用于 v0.9 之前。",
+      "expected_constraint_keys": ["valid_until"],
+      "_why": "'适用于 v0.9 之前' / '本季度'->valid_until"
+    },
+    {
+      "text": "KG 专家认为 MKE 的 provenance 机制并非独有。",
+      "expected_constraint_keys": ["attributed_to"],
+      "_why": "'专家认为'->attributed_to"
+    },
+    {
+      "text": "A18 芯片由 TSMC 代工。",
+      "expected_constraint_keys": [],
+      "_why": "无约束触发词，客观上不含任何约束维度；用于检测过度抽取（幻觉约束）"
+    },
+    {
+      "text": "MKE 相比传统 RAG 在检索质量上可能更好，但缺乏实证。",
+      "expected_constraint_keys": ["baseline", "confidence"],
+      "_why": "'相比 传统RAG'->baseline; '可能' / '缺乏实证'->confidence"
+    },
+    {
+      "text": "新芯片较前代提速 20%。",
+      "expected_constraint_keys": ["baseline"],
+      "_why": "'较前代'->baseline（'前代'是隐含型号名，弱模型可能漏识别）"
+    },
+    {
+      "text": "相比 2024 版，今年模型的吞吐量提升 40%。",
+      "expected_constraint_keys": ["baseline"],
+      "_why": "'相比 2024 版'->baseline（跨年版本引用）"
+    },
+    {
+      "text": "王五否认 MKE 的核心创新是 provenance。",
+      "expected_constraint_keys": ["attributed_to"],
+      "_why": "'王五否认'->attributed_to（否定观点必须标归属）"
+    },
+    {
+      "text": "李四认为 RAG 已被向量数据库取代。",
+      "expected_constraint_keys": ["attributed_to"],
+      "_why": "'李四认为'->attributed_to"
+    },
+    {
+      "text": "A 专家认为 MKE 检索质量优于 RAG；B 专家则持相反看法。",
+      "expected_constraint_keys": ["baseline", "attributed_to"],
+      "_why": "'优于 RAG'->baseline; 'A 专家'/'B 专家'->attributed_to（多观点归属）"
+    },
+    {
+      "text": "有人认为 MKE 比 RAG 慢；另有人持相反意见。",
+      "expected_constraint_keys": ["baseline", "attributed_to", "confidence"],
+      "_why": "'比 RAG'->baseline; '有人'/'另有人'->attributed_to; '持相反意见'->confidence（多观点 + 不确定）"
+    },
+    {
+      "text": "该 SLA 在 2027 年 6 月之前有效。",
+      "expected_constraint_keys": ["valid_until"],
+      "_why": "'在 2027 年 6 月之前'->valid_until（明确日期）"
+    },
+    {
+      "text": "MKE v1.0 之后将启用新检索 API，v0.9 之前仍用旧版。",
+      "expected_constraint_keys": ["valid_until"],
+      "_why": "'v0.9 之前仍用旧版' / 'v1.0 之后'->valid_until（版本切换点）"
+    },
+    {
+      "text": "MKE 可能比 RAG 更好（尚无实证），但有专家持怀疑态度。",
+      "expected_constraint_keys": ["baseline", "confidence", "attributed_to"],
+      "_why": "'比 RAG'->baseline; '可能'/'尚无实证'->confidence; '有专家'->attributed_to（复合陷阱）"
+    },
+    {
+      "text": "在百万文档场景下，MKE 延迟保持稳定（见内部 benchmark 2026Q1）。",
+      "expected_constraint_keys": ["scenario", "metric"],
+      "_why": "'在百万文档场景下'->scenario; '（见内部 benchmark 2026Q1）'->metric"
+    }
+  ]
+}

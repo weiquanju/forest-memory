@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://forest-memory/experiments/agf_mvp/extractions.schema.json",
+  "title": "Model Extractions",
+  "description": "某模型对测试文本的断言抽取产出文件结构。抽取规范见 extraction_spec.md，测试文本见 test_texts.json。本文件为该产出的类型契约（schema），各模型会话须产出符合本 schema 的 JSON。",
+  "type": "object",
+  "required": ["model", "samples"],
+  "additionalProperties": false,
+  "properties": {
+    "model": {
+      "type": "string",
+      "description": "模型名 / AAI 等级标识，如 'GLM-5.2 (AAI>=51)' 或 'DSV4 Flash (AAI~44)'"
+    },
+    "samples": {
+      "type": "array",
+      "description": "抽取结果数组，须与 test_texts.json 的 texts 同序对齐",
+      "items": {
+        "type": "object",
+        "required": ["text", "preds"],
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "原始测试文本，应与 test_texts.json 对应项完全一致"
+          },
+          "preds": {
+            "type": "array",
+            "description": "该文本抽取出的断言列表；无可结构化断言时为空数组 []",
+            "items": { "$ref": "#/$defs/assertion" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "assertion": {
+      "type": "object",
+      "required": ["s", "p", "o", "constraints"],
+      "additionalProperties": false,
+      "properties": {
+        "s": {
+          "type": "string",
+          "description": "主体实体 (subject)，使用文本原词，不做归一化"
+        },
+        "p": {
+          "type": "string",
+          "description": "谓词 / 关系 / 属性 (predicate)"
+        },
+        "o": {
+          "type": "string",
+          "description": "客体值或实体 (object)"
+        },
+        "constraints": {
+          "type": "object",
+          "description": "约束键值对；无约束时为空对象 {}。键仅取文本中实际出现的，详见 extraction_spec.md §3",
+          "additionalProperties": {
+            "type": "string",
+            "description": "约束值，如 '单核跑分' / 'A17' / 'Geekbench6' / 'v0.9' / 'KG专家' / '可能'"
+          }
+        }
+      }
+    }
+  }
+}

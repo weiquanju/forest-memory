@@ -1,0 +1,72 @@
+{
+  "model": "GLM-5.2 (AAI~51)",
+  "samples": [
+    {
+      "text": "A18 在单核跑分场景下较 A17 提升 30%（Geekbench6）。",
+      "preds": [
+        {
+          "s": "A18",
+          "p": "perf_gain",
+          "o": "30%",
+          "constraints": {
+            "scenario": "单核跑分",
+            "baseline": "A17",
+            "metric": "Geekbench6"
+          }
+        }
+      ]
+    },
+    {
+      "text": "本季度 MKE 检索延迟预算为 <500ms，该指标适用于 v0.9 之前。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "retrieval_latency_budget",
+          "o": "<500ms",
+          "constraints": {
+            "valid_until": "本季度；v0.9之前"
+          }
+        }
+      ]
+    },
+    {
+      "text": "KG 专家认为 MKE 的 provenance 机制并非独有。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "provenance_mechanism_unique",
+          "o": "并非独有",
+          "constraints": {
+            "attributed_to": "KG专家"
+          }
+        }
+      ]
+    },
+    {
+      "text": "A18 芯片由 TSMC 代工。",
+      "preds": [
+        {
+          "s": "A18",
+          "p": "manufactured_by",
+          "o": "TSMC",
+          "constraints": {}
+        }
+      ]
+    },
+    {
+      "text": "MKE 相比传统 RAG 在检索质量上可能更好，但缺乏实证。",
+      "preds": [
+        {
+          "s": "MKE",
+          "p": "retrieval_quality",
+          "o": "更好",
+          "constraints": {
+            "baseline": "传统RAG",
+            "metric": "检索质量",
+            "confidence": "可能；缺乏实证"
+          }
+        }
+      ]
+    }
+  ]
+}
