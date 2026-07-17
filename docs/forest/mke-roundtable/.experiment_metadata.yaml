@@ -1,0 +1,22 @@
+experiment_id: fgm-20260717-mrt
+model_name: DeepSeek V4 Flash
+intelligence_index: ~40-44
+model_provider: deepseek-api.com
+tool_name: CodeBuddy
+tool_version: "4.10.2"
+ide_name: VS Code
+ide_version: unknown
+os: Windows_NT x64
+input_source: MKE 项目讨论对话记录（圆桌讨论原始消息 + MKE 各森林文档）
+input_version: "2026-07-17"
+output_dir: docs/forest/mke-roundtable
+extraction_params:
+  threshold: N/A（手工构建）
+  embedding_model: N/A（手工构建）
+timestamp_start: "2026-07-17T06:00:00Z"
+timestamp_end: "2026-07-17T07:00:00Z"
+notes: |
+  本森林为手工构建，非 LLM 自动化抽取。
+  讨论内容来自异步团队协作（mke-expert-panel 团队），三名专家为 code-explorer 代理。
+  DSV4 Flash 为主体消费者视角，D4 天花板声明：批判性分析深度受限。
+  评审者偏差：DSV4 Flash 既是被评估对象（作为消费者），也是评估者——自指风险已声明。
