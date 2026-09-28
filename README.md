@@ -67,3 +67,32 @@
 - **MKE 森林**：[docs/forest/meta-knowledge-engine/index.md](docs/forest/meta-knowledge-engine/index.md)
 - **知识领域森林理论**：[docs/forest/meta-knowledge-engine/知识领域森林理论.md](docs/forest/meta-knowledge-engine/知识领域森林理论.md)
 - **五层架构蓝图**：[docs/forest/meta-knowledge-engine/五层架构蓝图.md](docs/forest/meta-knowledge-engine/五层架构蓝图.md)
+
+## 许可协议
+
+本项目（含全部文档、知识森林内容及仓库内脚本）采用
+**[知识共享 署名-相同方式共享 4.0 国际许可协议](https://creativecommons.org/licenses/by-sa/4.0/deed.zh)（CC BY-SA 4.0）** 授权。
+
+版权所有 (c) 2026 QuanJu
+
+<p align="center">
+  <a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg" alt="CC BY-SA 4.0" width="88" height="31"></a>
+</p>
+
+**你可以自由地：**
+
+- **共享** — 以任何媒介或格式复制、发行本作品
+- **演绎** — 修改、转换或以本作品为基础进行创作，包括商业用途
+
+**惟须遵守下列条件：**
+
+- **署名** — 必须给出适当的署名（标明作者与来源链接），提供指向本许可协议的链接，并说明是否作出了修改
+- **相同方式共享** — 若再混合、转换或基于本作品创作，必须基于相同的许可协议分发你的贡献，不得附加额外限制
+
+**完整法律文本**：[LICENSE](LICENSE)（英文版本为权威文本；[中文译本](https://creativecommons.org/licenses/by-sa/4.0/legalcode.zh-Hans)仅供理解参考，如与英文版冲突以英文版为准）
+
+建议的引用格式：
+
+```
+元知识引擎（Meta-Knowledge Engine），QuanJu，2026，CC BY-SA 4.0
+```
